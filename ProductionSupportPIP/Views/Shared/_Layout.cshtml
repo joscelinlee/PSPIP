@@ -1,0 +1,168 @@
+﻿@using ProductionSupportPIP.Models;
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+    <title>KB Conversion Tool for PS</title>
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="~/TemplateResources/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/TemplateResources/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="~/TemplateResources/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="~/Resources/css/main.css">
+    @Styles.Render("~/Content/dropzonescss")
+<script language="javascript" type="text/javascript">
+// <![CDATA[
+
+
+
+
+        function Button1_onclick() {
+            // window.location.assign("Search.aspx")
+            Response.Write("Hello World!!!");
+        }
+
+// ]]>
+    </script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index2.html" class="logo" style="background-color:white">
+                <span class="logo-lg"><img src="~/Resources/Images/citilogo.png" style="width:75px;height:40px;"></span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" style="background-color:white">
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user " aria-hidden="true" style="color:black"></i>
+                                <span class="hidden-xs" style="color:black">Joscelin</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <i class="fa fa-user " aria-hidden="true" style="color:black"></i>
+                                    <p>
+                                        Test User - Production Support
+                                        <small>Joined since March 2017</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" action="/Home/Index">
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <ul class="sidebar-menu">
+                        <li class="header" style="background-color:#222d32"></li>
+                        <li>
+                            <a href="#">
+                                <span>146074 - Claim letter failure report</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span>36494 - COPES - HKEX Web Stock<br> 02801 error</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span>35687 - Users can't login</span>
+                            </a>
+                        </li>
+
+                        @{
+                            if (Model.FileNameArray != null)
+                            {
+                                for (int i = Model.ArrayCount; i < Model.FileNameArray.Count; i++)
+                                {
+
+                                    <li>
+                                        <a href="@Url.Action("Index", "Home", new { ID = i })">
+                                            <span>@Model.FileNameArray[i]</span>
+                                        </a>
+                                    </li>
+
+                                }
+
+                            }
+                        }
+
+                        <li class="header" style="background-color:#222d32">
+                            <button type="submit" name="generateBtn" class="btn btn-flat btn-md" style="background-color:#00c0ef; color:#fff; width:100%; height:40px; display:inline-block; vertical-align: top;">GENERATE</button>
+                        </li>
+                    </ul>
+                </form>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+            @Scripts.Render("~/bundles/dropzonescripts")
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>Production Support Technology Analyst'16</strong>
+        </footer>
+        <!-- Add the sidebar's background. This div must be placed
+             immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 2.2.3 -->
+    <script src="~/TemplateResources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="~/TemplateResources/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="~/TemplateResources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/TemplateResources/plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/TemplateResources/dist/js/app.min.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/TemplateResources/dist/js/pages/dashboard.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/TemplateResources/dist/js/demo.js"></script>
+    @RenderSection("myStyles", false)
+    @RenderSection("myScripts", false)
+</body>
+</html>

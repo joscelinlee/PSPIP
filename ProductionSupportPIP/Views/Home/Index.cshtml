@@ -1,0 +1,212 @@
+﻿@using ProductionSupportPIP.Models;
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@{ 
+    String html = Model.RetrieveFileContent;
+    String decode = HttpUtility.HtmlDecode(html);
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+@{
+    if (!String.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success alert-dismissible" style="background-color:#2CC990 !important; border-color:#2CC990 !important">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            @Model.SuccessMessage
+        </div>
+    }
+}   
+    <div>
+        <h4>Choose either</h4>
+        1) Build Content - copy-and-paste one article and convert it into a standardized format <br />
+        2) Upload Multiples - upload multiple articles at one go and convert them into standardized format <br /><br />
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom tab-info">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1" data-toggle="tab">Build Content</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">Upload Multiples</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <!-- Main content -->
+                        <section class="content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- form start -->
+                                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" action="/Home/Index">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label for="CSIID" class="col-sm-2 control-label">CSI ID</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="CSIID" name="CSIID" placeholder="CSI ID" value="@Model.RetrieveCSIID">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ArticleTitle" class="col-sm-2 control-label">Title</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="ArticleTitle" name="ArticleTitle" placeholder="Article Title" value="@Model.RetrieveArticleName">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body -->
+                                        <div>
+                                            <!-- /.box-header -->
+                                            <div class="box-body pad">
+                                                @{
+                                                    if (decode != null && decode.IsEmpty() == false)
+                                                    {
+                                                        <textarea id="editor1" name="editor1" rows="10" cols="80">
+                                                            @decode
+                                                        </textarea>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <textarea id="editor1" name="editor1" rows="10" cols="80">
+                                                            Add content here
+                                                        </textarea>
+                                                    }
+                                                } 
+                                            </div>
+                                            <div class="" style="display: flex; justify-content:center; align-items: center">
+                                                @{
+                                                    if (!Model.UpdateBool)
+                                                    {
+                                                        <button type="submit" name="saveBtn" class="btn btn-flat btn-md" style="background-color:#00c0ef; color:#fff; width:70px; height:40px; display:inline-block; vertical-align: top;">SAVE</button>
+                                                    }
+                                                    else
+                                                    {            
+                                                        <button type="submit" name="updateBtn" value="@Model.CurrentUpdateID" class="btn btn-flat btn-md" style="background-color:#e67e22; color:#fff; width:70px; height:40px; display:inline-block; vertical-align: top;">UPDATE</button>     
+                                                    }
+                                                }
+                                                    &nbsp;&nbsp;&nbsp;
+                                                <button type="submit" name="cancelBtn" class="btn btn-flat btn-md" style="background-color:#222d32; color:#fff; width:70px; height:40px; display:inline-block; vertical-align: top;">CANCEL</button>
+                                            </div>
+                                        </div>
+                                    </form>  
+                                </div>
+                            </div>
+                            <!-- /.box -->
+                        </section>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_2">
+                        <div class="form-group">
+                            <!-- <label for="exampleInputFile">Upload file</label>
+                            <input type="file" id="exampleInputFile"> -->
+                            <!-- Standard Form -->
+                            <h5>Select files from your computer</h5>
+                            <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <input type="file" name="files[]" id="js-upload-files" multiple>
+                                    </div>
+                                    <!--<button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>-->
+                                </div>
+                            </form>
+                            <!-- Drop Zone -->
+                            <h5>Or drag and drop files below</h5>
+                            <div class="upload-drop-zone" id="box">
+                                Just drag and drop files here
+                            </div>     
+                            <!-- Upload Finished -->
+                            <div class="js-upload-finished">
+                                <h3>Processed files</h3>
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>35611 - 0x80070002 error code</a>
+                                    <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>35611 - Client call to cancel an order</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.tab-content -->
+        </div>
+    </div>
+</section>
+ <script type="text/javascript">
+        function submitArticle() {
+            // var $input = $('<input type="button" value="new button" />');
+            // $input.appendTo($("aside"))
+            var csiid = document.getElementById('inputEmail3').value;
+            var title = document.getElementById('inputPassword3').value;
+            // <input type="submit" style="font-face: 'Comic Sans MS'; font-size: larger; color: teal; background-color: #222d32; border: 3pt ridge lightgrey" value=" Send Me! ">
+            //var $input = $("<input type='button' value='" + csiid + " - " + title + "' style = 'background-color:#222d32' style = 'border:#222d32' style='width:100%' style='color:#FFFFFF'/><br/><br/>");
+            var $input = $("<input type='button' value='" + csiid + " - " + title + "' style='width:100%;background-color:#222d32;color:#FFFFFF;border:#222d32'/><br/><br/>");
+            $input.appendTo($("aside"));
+        }
+</script>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+    alert("hey");
+    var selectedFiles;
+    
+    $(document).ready(function () {
+        console.log("HEY");
+        var box;
+        box = document.getElementById("box");
+        box.addEventListener("dragenter", OnDragEnter, false);
+        box.addEventListener("dragover", OnDragOver, false);
+        box.addEventListener("drop", OnDrop, false);
+    }),
+   
+    function OnDragEnter(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    },
+ 
+    function OnDragOver(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    },
+ 
+    function OnDrop(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        selectedFiles = e.dataTransfer.files;
+        console.log("hello");
+        console.log("No. of files: " + selectedFiles);
+        $("#box").text(selectedFiles.length + " file(s) selected for uploading!");
+     },
+
+    $("#upload").click(function () {
+        var data = new FormData();
+        for (var i = 0; i < selectedFiles.length; i++) {
+            data.append(selectedFiles[i].name, selectedFiles[i]);
+        }
+        $.ajax({
+            type: "POST",
+            url: "FileHandler.ashx",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (result) {
+                alert(result);
+            },
+            error: function () {
+                alert("There was error uploading files!");
+            }
+        });
+    });
+</script>
+@section myScripts{
+    <!-- jQuery 2.2.3 -->
+    <script src="~/TemplateResources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="~/TemplateResources/bootstrap/js/bootstrap.min.js"></script>
+    <!-- CK Editor -->
+    <script src="~/TemplateResources/plugins/ckeditor/ckeditor.js"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="~/TemplateResources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script>
+        CKEDITOR.replace('editor1');          
+    </script>
+    <script src="~/Resources/js/dropzone.js"></script>  
+}
